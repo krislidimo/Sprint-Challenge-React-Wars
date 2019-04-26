@@ -1,25 +1,66 @@
 import React from 'react';
 import Starship from './Starship';
-import Vehicle from './Vehicle';
 import './StarWars.css';
 
-export default function character(props) {
-	return(
-		<div className="character">
-			<p>Name: {props.character.name}</p>
-			<p>Birth Year: {props.character.birth_year}</p>
-			<p>Gender: {props.character.gender}</p>
-			<p>Height: {props.character.height}</p>
-			<p>Mass: {props.character.mass}</p>
+export default class Character extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			starships:[]
+		}
+	}
 
-			{props.character.starships.map(starship => {
-				return <Starship key={starship.model} starship={starship}/>
-			})}
+	componentDidMount() {
+		this.props.character.starships.forEach(ship => {
+	    	console.log(ship);
+	    	this.getItem(ship);
+		});
+  	}
 
-			{props.character.vehicles.map(vehicle => {
-				return <Vehicle key={vehicle.model} vehicle={vehicle}/>
-			})}
+  	getItem = URL => {
+	    // feel free to research what this code is doing.
+	    // At a high level we are calling an API to fetch some starwars data from the open web.
+	    // We then take that data and resolve it our state.
+	    fetch(URL)
+	      .then(res => {
+	        return res.json();
+	      })
+	      .then(data => {
+	        this.setState({
+	        	starships: [
+	        		...this.state.starships, 
+	        		data
+	        	]
+	        });
+	      })
+	      .catch(err => {
+	        throw new Error(err);
+	      });
+	};
 
-		</div>
-	);
+	render() {
+		return(
+			<div className="character">
+				<h2 className="char-name">{this.props.character.name}</h2>
+
+				<div className="info-section">
+					<p>Birth Year: {this.props.character.birth_year}</p>
+					<p>Gender: {this.props.character.gender}</p>
+					<p>Height: {this.props.character.height}</p>
+					<p>Mass: {this.props.character.mass}</p>
+					<p>Hair: {this.props.character.hair_color}</p>
+					<p>Skin: {this.props.character.skin_color}</p>
+					<p>Eyes: {this.props.character.eye_color}</p>
+				</div>
+
+				<h2 className="char-name">Starships</h2>
+
+				<div className="starships">
+					{this.state.starships.map(starship => {
+						return <Starship key={starship.model} starship={starship} />
+					})}
+				</div>
+			</div>
+		);
+	};
 }
