@@ -12,9 +12,9 @@ export default class Character extends React.Component {
 
 	componentDidMount() {
 		this.props.character.starships.forEach(ship => {
-	    	console.log(ship);
 	    	this.getItem(ship);
 		});
+	    console.log(this.props.character.starships);
   	}
 
   	getItem = URL => {
