@@ -4,7 +4,7 @@ import './StarWars.css';
 export default function Starship(props) {
 	return(
 		<div className="starship">
-			<h3 >{props.starship.name}</h3>
+			<h3>{props.starship.name}</h3>
 
 			<div className="info-section">
 				<p>Model: {props.starship.model}</p>

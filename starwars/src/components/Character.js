@@ -38,6 +38,16 @@ export default class Character extends React.Component {
 	      });
 	};
 
+	classHandler = () => {
+		let starshipClasses = "char-name";
+		if (this.state.starships.length === 0) {
+			starshipClasses += " hide";
+		};
+
+		return starshipClasses;
+	}
+	
+
 	render() {
 		return(
 			<div className="character">
@@ -53,9 +63,9 @@ export default class Character extends React.Component {
 					<p>Eyes: {this.props.character.eye_color}</p>
 				</div>
 
-				<h2 className="char-name">Starships</h2>
+				<h2 className={this.classHandler()} >Starships</h2>
 
-				<div className="starships">
+				<div>
 					{this.state.starships.map(starship => {
 						return <Starship key={starship.model} starship={starship} />
 					})}

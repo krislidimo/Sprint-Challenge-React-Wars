@@ -101,3 +101,7 @@ h3 {
 .info-section {
 	margin: 20px 0;
 }
+
+.hide {
+	display: none;
+}
